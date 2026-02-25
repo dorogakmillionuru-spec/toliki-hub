@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Прайс — AI решения</title>
+  <meta name="description" content="Прайс: аватары, AI-инструменты, цифровые сотрудники" />
+  <style>
+    :root{
+      --bg1:#f6f7fb;
+      --bg2:#eef1f8;
+      --ink:#0b1220;
+      --muted:#475569;
+      --glass: rgba(255,255,255,.55);
+      --glass2: rgba(255,255,255,.35);
+      --stroke: rgba(15,23,42,.10);
+      --shadow: 0 24px 60px rgba(2,6,23,.12);
+      --shadow2: 0 14px 30px rgba(2,6,23,.10);
+      --accent:#2563eb;   /* синий */
+      --accent2:#f97316;  /* рыжий */
+      --radius:22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(37,99,235,.18), transparent 55%),
+        radial-gradient(900px 700px at 85% 20%, rgba(249,115,22,.16), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* стеклянные блики */
+    .orb{
+      position:fixed; inset:auto auto 12% -8%;
+      width:420px; height:420px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.0) 60%);
+      filter: blur(8px);
+      opacity:.55;
+      pointer-events:none;
+      transform: rotate(15deg);
+    }
+    .orb.orb2{
+      inset: 8% -10% auto auto;
+      width:520px; height:520px;
+      opacity:.45;
+      transform: rotate(-10deg);
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 36px 18px 70px;
+    }
+
+    header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin: 8px 0 22px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:10px 14px;
+      border-radius: 999px;
+      background: var(--glass2);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow2);
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: 16px;
+      line-height:1.5;
+      max-width: 70ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .card{
+      grid-column: span 12;
+      background: var(--glass);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 18px 18px 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px -2px auto -2px;
+      height: 120px;
+      background: radial-gradient(900px 140px at 20% 40%, rgba(37,99,235,.22), transparent 60%),
+                  radial-gradient(800px 140px at 80% 40%, rgba(249,115,22,.18), transparent 60%);
+      opacity:.75;
+      pointer-events:none;
+    }
+
+    .cardTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      position:relative;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .tier{
+      font-weight:900;
+      letter-spacing:.8px;
+      font-size:12px;
+      opacity:.85;
+    }
+
+    .name{
+      margin:0;
+      font-size:20px;
+      letter-spacing:-.3px;
+    }
+
+    .price{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:3px;
+      white-space:nowrap;
+      position:relative;
+    }
+    .price strong{
+      font-size: 26px;
+      letter-spacing:-.4px;
+    }
+    .price span{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .desc{
+      margin: 12px 0 12px;
+      color: var(--muted);
+      line-height:1.55;
+      position:relative;
+    }
+
+    .list{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:8px;
+      position:relative;
+    }
+
+    .li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.42);
+      border: 1px solid rgba(15,23,42,.08);
+    }
+
+    .dot{
+      width:10px; height:10px; border-radius:99px;
+      background: var(--accent);
+      margin-top: 5px;
+      flex:0 0 10px;
+      box-shadow: 0 0 0 6px rgba(37,99,235,.10);
+    }
+    .dot.orange{
+      background: var(--accent2);
+      box-shadow: 0 0 0 6px rgba(249,115,22,.10);
+    }
+
+    .meta{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      position:relative;
+    }
+
+    .pill{
+      padding:9px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.35);
+      border: 1px solid rgba(15,23,42,.10);
+      color: var(--muted);
+      font-size: 13px;
+      backdrop-filter: blur(10px);
+    }
+
+    .ctaRow{
+      margin-top: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.14);
+      background: rgba(255,255,255,.40);
+      backdrop-filter: blur(12px);
+      color: var(--ink);
+      text-decoration:none;
+      font-weight:800;
+      box-shadow: var(--shadow2);
+    }
+    .cta.primary{
+      border-color: rgba(37,99,235,.22);
+      background: linear-gradient(135deg, rgba(37,99,235,.18), rgba(255,255,255,.45));
+    }
+    .cta.secondary{
+      border-color: rgba(249,115,22,.22);
+      background: linear-gradient(135deg, rgba(249,115,22,.16), rgba(255,255,255,.45));
+    }
+
+    .fine{
+      margin-top:18px;
+      padding: 16px 16px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.40);
+      border: 1px solid rgba(15,23,42,.10);
+      color: var(--muted);
+      line-height:1.6;
+    }
+
+    .twoCol{
+      grid-column: span 12;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .small{
+      grid-column: span 12;
+    }
+
+    @media (min-width: 860px){
+      .card{ grid-column: span 6; }
+      .small{ grid-column: span 6; }
+      .twoCol .small{ grid-column: span 6; }
+    }
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.55;
+      text-align:center;
+      opacity:.9;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb"></div>
+  <div class="orb orb2"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="badge">🧊 ПРАЙС • AI-решения и цифровые персонажи</div>
+      <h1>Сделаем так, чтобы инструмент работал, а не лежал “на потом”.</h1>
+      <p class="sub">
+        Здесь про результат: персонаж/бот/инструмент с мозгом (логика + сценарии + правила).
+        Без “я потом посмотрю ютуб” и без кривого говна на бесплатных сервисах 😼
+      </p>
+    </header>
+
+    <div class="grid">
+      <!-- MINI -->
+      <section class="card">
+        <div class="cardTop">
+          <div class="title">
+            <div class="tier">MINI — быстрый старт</div>
+            <h2 class="name">Запуск без боли</h2>
+          </div>
+          <div class="price">
+            <strong>5 000 ₽</strong>
+            <span>разово</span>
+          </div>
+        </div>
+
+        <p class="desc">
+          Для тех, кому нужно быстро понять механику и получить рабочий прототип.
+        </p>
+
+        <ul class="list">
+          <li class="li"><span class="dot"></span><div><b>Задача → план → структура</b> (что делаем и зачем)</div></li>
+          <li class="li"><span class="dot"></span><div><b>Мини-мозг</b>: 10 сценариев/реплик + правила тона</div></li>
+          <li class="li"><span class="dot"></span><div><b>Инструкция</b>: как дальше поддерживать и обновлять</div></li>
+          <li class="li"><span class="dot orange"></span><div><b>1 корректировка</b> после сдачи</div></li>
+        </ul>
+
+        <div class="meta">
+          <span class="pill">Сценарии: 10</span>
+          <span class="pill">Сопровождение: нет</span>
+          <span class="pill">Срок: 1–2 дня*</span>
+        </div>
+
+        <div class="ctaRow">
+          <a class="cta primary" href="#" onclick="return false;">💬 Обсудить MINI</a>
+          <a class="cta" href="#" onclick="return false;">📌 Что значит “корректировка”</a>
+        </div>
+      </section>
+
+      <!-- LIGHT -->
+      <section class="card">
+        <div class="cardTop">
+          <div class="title">
+            <div class="tier">LIGHT — рабочий запуск</div>
+            <h2 class="name">Персонаж / инструмент, который используют</h2>
+          </div>
+          <div class="price">
+            <strong>15 000 ₽</strong>
+            <span>разово</span>
+          </div>
+        </div>
+
+        <p class="desc">
+          Уже не “поигрались”, а реально запустили. Мозг + сценарии + подстройка после старта.
+        </p>
+
+        <ul class="list">
+          <li class="li"><span class="dot"></span><div><b>Сборка</b> персонажа/бота под задачу</div></li>
+          <li class="li"><span class="dot"></span><div><b>Мозг</b>: 30 сценариев + 5 ситуаций (вопросы/возражения)</div></li>
+          <li class="li"><span class="dot"></span><div><b>Тон и поведение</b>: “как говорить”, “что не говорить”</div></li>
+          <li class="li"><span class="dot orange"></span><div><b>Сопровождение 7 дней</b> после запуска</div></li>
+        </ul>
+
+        <div class="meta">
+          <span class="pill">Сценарии: 30</span>
+          <span class="pill">Ситуации: 5</span>
+          <span class="pill">Сопровождение: 7 дней</span>
+          <span class="pill">Срок: 3–5 дней*</span>
+        </div>
+
+        <div class="ctaRow">
+          <a class="cta secondary" href="#" onclick="return false;">⚡ Хочу LIGHT</a>
+          <a class="cta" href="#" onclick="return false;">🧠 Что входит в “мозг”</a>
+        </div>
+      </section>
+
+      <!-- PRO -->
+      <section class="card">
+        <div class="cardTop">
+          <div class="title">
+            <div class="tier">PRO — под ключ</div>
+            <h2 class="name">Цифровой сотрудник (не “ботик”)</h2>
+          </div>
+          <div class="price">
+            <strong>50 000 ₽</strong>
+            <span>разово</span>
+          </div>
+        </div>
+
+        <p class="desc">
+          Когда нужно, чтобы персонаж “жил” в соцсетях и был управляемой системой.
+        </p>
+
+        <ul class="list">
+          <li class="li"><span class="dot"></span><div><b>Стратегия</b>: образ, роль, позиционирование</div></li>
+          <li class="li"><span class="dot"></span><div><b>Мозг PRO</b>: 60 сценариев + 10 ситуаций + правила реакций</div></li>
+          <li class="li"><span class="dot"></span><div><b>Контент-логика</b>: как вести соцсети от имени персонажа</div></li>
+          <li class="li"><span class="dot orange"></span><div><b>Сопровождение 14 дней</b> + чек-лист качества</div></li>
+        </ul>
+
+        <div class="meta">
+          <span class="pill">Сценарии: 60</span>
+          <span class="pill">Ситуации: 10</span>
+          <span class="pill">Сопровождение: 14 дней</span>
+          <span class="pill">Срок: 7–14 дней*</span>
+        </div>
+
+        <div class="ctaRow">
+          <a class="cta primary" href="#" onclick="return false;">🚀 Хочу PRO</a>
+          <a class="cta" href="#" onclick="return false;">📎 Пример структуры сценариев</a>
+        </div>
+      </section>
+
+      <!-- Enterprise -->
+      <section class="card">
+        <div class="cardTop">
+          <div class="title">
+            <div class="tier">BUSINESS / ENTERPRISE</div>
+            <h2 class="name">AI-консультанты и кастом под бизнес</h2>
+          </div>
+          <div class="price">
+            <strong>от 1 500 $</strong>
+            <span>проект</span>
+          </div>
+        </div>
+
+        <p class="desc">
+          Для компаний и лидеров: консультант, продавец, внутренняя система знаний, сценарии, прототипы.
+        </p>
+
+        <ul class="list">
+          <li class="li"><span class="dot"></span><div><b>База знаний + сценарии</b> (без глухого телефона)</div></li>
+          <li class="li"><span class="dot"></span><div><b>Роли</b>: консультант / продавец / онбординг / поддержка</div></li>
+          <li class="li"><span class="dot orange"></span><div><b>Варианты</b>: “под ключ”, “на ресурсах компании”, “с сопровождением”</div></li>
+        </ul>
+
+        <div class="fine">
+          <b>Три формата работы:</b><br/>
+          1) <b>Сделала и отдала</b> (дальше вы сами) • 2) <b>Сделала + поддержка</b> • 3) <b>Сделала, ваша команда внедрила</b> (я отвечаю за сценарии/логику)
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      *Сроки ориентировочные и зависят от входных материалов (фото/голос/бренд-гайд/задачи).
+      <br/>Если нужно “прям срочно вчера” — делаем экспресс и считаем отдельно.
+    </footer>
+  </div>
+</body>
+</html>
