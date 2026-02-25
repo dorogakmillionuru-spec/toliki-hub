@@ -3,150 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Толики — HUB</title>
+
+<title>NEW CODE — вход</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:#faf8f5;
-  color:#1e1e1e;
-  padding:30px;
-  line-height:1.4;
-  position:relative;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:#f9f9f9;
+    color:#111;
 }
 
-/* мягкий неон */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:0.06;
-  background-image:
-    radial-gradient(circle at 20% 20%, #ff7a00 0%, transparent 25%),
-    radial-gradient(circle at 80% 40%, #ff9d3a 0%, transparent 30%),
-    radial-gradient(circle at 40% 80%, #ff6a00 0%, transparent 25%);
-}
-
-.container{
-  max-width:900px;
-  margin:auto;
+.wrapper{
+    max-width:900px;
+    margin:40px auto;
+    padding:0 20px;
 }
 
 h1{
-  font-size:34px;
-  margin-bottom:10px;
+    font-size:48px;
+    margin-bottom:10px;
 }
 
 .subtitle{
-  color:#666;
-  margin-bottom:25px;
+    color:#666;
+    margin-bottom:30px;
 }
 
-.block{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.04);
+.card{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.04);
+    border:1px solid #eee;
 }
 
-.title{
-  font-size:22px;
-  margin-bottom:10px;
-}
-
-.desc{
-  color:#555;
-  margin-bottom:15px;
+.card h2{
+    margin-top:0;
 }
 
 .btn{
-  display:inline-block;
-  padding:14px 22px;
-  border-radius:12px;
-  text-decoration:none;
-  font-weight:600;
-  background:#f28b2c;
-  color:#2b1a0d;
-  transition:0.25s;
+    display:inline-block;
+    margin-top:16px;
+    background:#ff8a00;
+    color:#111;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:700;
+    transition:0.2s;
 }
 
 .btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(242,139,44,0.35);
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(255,138,0,0.4);
 }
 
-.footer{
-  margin-top:30px;
-  text-align:center;
-  color:#777;
-  font-size:14px;
+/* НЕОНОВАЯ МАТРИЦА 😎 */
+.matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.matrix span{
+    position:absolute;
+    color:rgba(255,138,0,0.08);
+    font-size:18px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{ transform:translateY(-100px);}
+    to{ transform:translateY(110vh);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="matrix" id="matrix"></div>
+
+<div class="wrapper">
 
 <h1>Открывай. Читай. Делай.</h1>
 <div class="subtitle">
-Это страница для тех, кто уже внутри. Всё нужное — в одном месте.
+Это страница для тех, кто уже внутри. Всё нужное — в одном месте.  
+Без «где ссылка?» и без отката назад на 200 сообщений.
 </div>
 
-<div class="block">
-  <div class="title">🚀 Первый контакт</div>
-  <div class="desc">
-  Распаковка сетевика → упаковка соцсетей.
-  </div>
-  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
-    Открыть Первый контакт
-  </a>
+<div class="card">
+<h2>🚀 Первый контакт</h2>
+<p>Распаковка сетевика → упаковка соцсетей.  
+Без «я не знаю кто я» и без танцев без штанов 😎</p>
+<a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+Открыть Первый контакт
+</a>
 </div>
 
-<div class="block">
-  <div class="title">💬 Приглашатор</div>
-  <div class="desc">
-  Снимает страх общения. Помогает начать говорить своим голосом.
-  </div>
-  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
-    Открыть Приглашатор
-  </a>
+<div class="card">
+<h2>💬 Приглашатор</h2>
+<p>Не волшебный текст. А снятие страха.  
+Помогает начать говорить своим голосом.</p>
+<a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+Открыть Приглашатор
+</a>
 </div>
 
-<div class="block">
-  <div class="title">🎬 Продюсер проекта</div>
-  <div class="desc">
-  Твой личный продюсер под любой проект.
-  </div>
-  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
-    Открыть Продюсера
-  </a>
+<div class="card">
+<h2>🎬 Продюсер проекта</h2>
+<p>Твой личный продюсер под любой проект.</p>
+<a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+Открыть Продюсера
+</a>
 </div>
 
-<div class="block">
-  <div class="title">📌 Как работать</div>
-  <div class="desc">
-  После каждого диалога делай скрин результата → кидай в чат клуба.
-  </div>
-  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
-    Перейти в чат клуба
-  </a>
-</div>
-
-<div class="footer">
-NEW CODE • Страница доступа
+<div class="card">
+<h2>📌 Как работать</h2>
+<p>После каждого диалога — скрин результата → кидай в чат клуба.</p>
+<a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+Перейти в чат клуба
+</a>
 </div>
 
 </div>
+
+<script>
+const matrix=document.getElementById('matrix');
+for(let i=0;i<50;i++){
+  const s=document.createElement('span');
+  s.innerText='0101';
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(4+Math.random()*8)+'s';
+  s.style.fontSize=(12+Math.random()*20)+'px';
+  matrix.appendChild(s);
+}
+</script>
 
 </body>
 </html>
