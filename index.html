@@ -4,352 +4,425 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Вход в Толиков</title>
-  <meta name="description" content="Точка входа: 3 Толика + чат клуба + короткие инструкции." />
+  <meta name="description" content="Кнопки в Толиков + инструкции + чат клуба" />
   <style>
     :root{
-      --bg0:#0b0705;
-      --bg1:#140b07;
-      --text:#f6f2ef;
-      --muted:#cdbfb6;
-      --line:rgba(255,255,255,.10);
-      --accent:#ff7a18;
-      --accent2:#7dd3fc;
-      --shadow: 0 20px 60px rgba(0,0,0,.55);
-      --radius: 20px;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0b1220;
+      --muted:#5b6475;
+      --stroke:rgba(10,18,32,.12);
+      --shadow: 0 12px 40px rgba(10,18,32,.10);
+      --pill:#0b1220;
+      --pillText:#ffffff;
+      --pill2:#ffffff;
+      --pill2Text:#0b1220;
+      --accent:#2d6cff;
+      --accent2:#00d1ff;
+      --accent3:#b300ff;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display","Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(45,108,255,.10), transparent 60%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(179,0,255,.08), transparent 55%),
+                  radial-gradient(1200px 900px at 50% 100%, rgba(0,209,255,.10), transparent 60%),
+                  var(--bg);
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(255,122,24,.28), transparent 60%),
-        radial-gradient(900px 600px at 80% 0%, rgba(125,211,252,.14), transparent 55%),
-        radial-gradient(900px 700px at 50% 120%, rgba(255,122,24,.18), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
       min-height:100vh;
+      overflow-x:hidden;
     }
-    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 70px}
-    header{
-      padding:26px 18px 18px;
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+
+    .wrap{
+      width:min(980px, 92vw);
+      margin: 22px auto 56px;
+      position:relative;
+    }
+
+    /* neon digits rain */
+    .rain{
+      position:absolute;
+      inset:-40px -20px auto -20px;
+      height:180px;
+      pointer-events:none;
+      opacity:.55;
+      filter: blur(.0px);
+      overflow:hidden;
+    }
+    .rain span{
+      position:absolute;
+      top:-40px;
+      font-weight:700;
+      letter-spacing:.02em;
+      animation: fall linear infinite;
+      user-select:none;
+      opacity:.0;
+      text-shadow: 0 0 14px currentColor;
+    }
+    @keyframes fall{
+      0%{ transform: translateY(-30px); opacity:0; }
+      10%{ opacity:.9; }
+      80%{ opacity:.55; }
+      100%{ transform: translateY(220px); opacity:0; }
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-top:16px;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    h1{
+      margin:0;
+      font-size: 28px;
+      line-height:1.1;
+      letter-spacing:-.02em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:10px 12px;
+      background: rgba(255,255,255,.7);
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      box-shadow: 0 8px 22px rgba(10,18,32,.06);
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:linear-gradient(180deg, var(--accent), var(--accent3));
+      box-shadow: 0 0 12px rgba(45,108,255,.6);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      margin-top:16px;
+    }
+
+    .card{
+      background: rgba(255,255,255,.82);
+      border:1px solid var(--stroke);
+      border-radius:22px;
       box-shadow: var(--shadow);
+      padding:16px;
       position:relative;
       overflow:hidden;
     }
-    header:before{
-      content:"";
-      position:absolute;inset:-2px;
-      background: radial-gradient(600px 220px at 18% 0%, rgba(255,122,24,.35), transparent 60%),
-                  radial-gradient(520px 220px at 85% 10%, rgba(125,211,252,.14), transparent 60%);
-      pointer-events:none;
+
+    .card h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.01em;
     }
-    .badge{
-      display:inline-flex;gap:8px;align-items:center;
-      padding:7px 12px;border-radius:999px;
-      border:1px solid rgba(255,122,24,.35);
-      background: rgba(255,122,24,.10);
-      color:#ffd3b3;font-weight:650;font-size:13px;
+    .card p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
     }
-    h1{margin:14px 0 8px;font-size:32px;line-height:1.08}
-    .sub{margin:0;color:var(--muted);max-width:70ch;font-size:15.5px;line-height:1.5}
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px;position:relative}
-    @media (max-width:860px){.grid{grid-template-columns:1fr}}
-    .card{
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      overflow:hidden;
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin: 10px 0 2px;
     }
-    .card .hd{
-      padding:14px 16px;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      border-bottom:1px solid var(--line);
-      background: rgba(0,0,0,.10);
-    }
-    .card .bd{padding:14px 16px 16px}
-    .title{font-weight:750;font-size:16px}
     .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: var(--muted);
-      font-size:12.5px;
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      padding:12px 14px;
+      border-radius:999px;
+      font-weight:700;
+      letter-spacing:.01em;
+      font-size:14px;
+      transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+    }
+    .pill.primary{
+      background: linear-gradient(135deg, #0b1220, #1a2440);
+      color:#fff;
+      box-shadow: 0 10px 26px rgba(10,18,32,.22);
+    }
+    .pill.ghost{
+      background: rgba(255,255,255,.75);
+      color: var(--text);
+      border:1px solid var(--stroke);
+      box-shadow: 0 8px 18px rgba(10,18,32,.08);
+    }
+    .pill:hover{ transform: translateY(-1px); }
+    .pill:active{ transform: translateY(0px) scale(.99); opacity:.96; }
+
+    .mini{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .item{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.78);
+      border-radius:18px;
+      padding:12px;
+    }
+    .item .head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .name{
+      font-weight:800;
+      font-size:14px;
+      letter-spacing:.01em;
+    }
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(45,108,255,.10);
+      border:1px solid rgba(45,108,255,.18);
+      color:#1e4dbb;
       white-space:nowrap;
     }
-    .steps{margin:0;padding-left:18px;color:var(--muted);line-height:1.55}
-    .steps li{margin:6px 0}
-    .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .btn{
-      appearance:none;border:0;cursor:pointer;
-      padding:12px 14px;border-radius:14px;
-      font-weight:800;letter-spacing:.2px;
-      color:#140b07;
-      background: linear-gradient(135deg, rgba(255,122,24,1), rgba(255,190,120,1));
-      box-shadow: 0 14px 35px rgba(255,122,24,.18);
-      transition: transform .08s ease, filter .08s ease;
+    .desc{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+    .go{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .go a{
       text-decoration:none;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      min-width: 220px;
     }
-    .btn:hover{transform: translateY(-1px);filter: brightness(1.02)}
-    .btn:active{transform: translateY(0px);filter: brightness(.98)}
-    .btn.secondary{
-      color: var(--text);
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow: none;
-      min-width: 220px;
+
+    .rule{
+      border: 2px dashed rgba(45,108,255,.30);
+      background: rgba(45,108,255,.06);
+      border-radius:18px;
+      padding:14px;
+      margin-top:12px;
     }
-    .btn.ghost{
-      min-width: unset;
+    .rule b{ color: var(--text); }
+    .rule .shrimp{ filter:saturate(1.1); }
+
+    .steps{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+    .steps li{ margin:6px 0; }
+
+    .footer{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .copy{
+      cursor:pointer;
       padding:10px 12px;
       border-radius:12px;
-      color: var(--muted);
-      background: rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:none;
-      font-weight:750;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.75);
     }
-    .kicker{color:#ffd3b3;font-weight:800;letter-spacing:.35px;font-size:12px;text-transform:uppercase}
-    .list{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.55}
-    .list li{margin:6px 0}
-    .divider{height:1px;background:var(--line);margin:14px 0}
-    .note{
-      border:1px solid rgba(251,191,36,.28);
-      background: rgba(251,191,36,.08);
-      color:#ffe4a7;
-      padding:12px;border-radius:14px;line-height:1.5;
-    }
-    .ok{
-      border:1px solid rgba(52,211,153,.25);
-      background: rgba(52,211,153,.07);
-      color:#c7ffea;
-      padding:12px;border-radius:14px;line-height:1.5;
-    }
-    .small{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:10px}
-    .links{
-      display:grid;gap:12px;margin-top:14px;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-    }
-    @media (max-width:700px){.links{grid-template-columns:1fr}}
-    .linkcard{
-      border:1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(255,255,255,.02));
-      padding:14px;
-    }
-    .linkcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .linkcard .name{font-weight:850}
-    .linkcard .meta{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
-    .footer{
-      margin-top:18px;
-      padding:14px 16px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-      color: var(--muted);
-      font-size:12.5px;
-      line-height:1.55;
-    }
-    code{
-      background: rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.12);
-      padding:2px 6px;border-radius:10px;
-      color:#ffd3b3;
+    .copy:hover{ transform: translateY(-1px); }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .badge{ display:none; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <span class="badge">🍫🧡 ВХОД В ТОЛИКОВ • март</span>
-      <h1>Открыл → прочитал → сделал.</h1>
-      <p class="sub">
-        Здесь три Толика + чат клуба + короткие правила. <br/>
-        Без “покажи экран” и без “проведи меня за ручку”.
-      </p>
+    <div class="rain" aria-hidden="true" id="rain"></div>
 
-      <div class="grid">
-        <div class="card">
-          <div class="hd">
-            <div class="title">⚠️ Перед стартом</div>
-            <span class="pill">2 минуты, и поехали</span>
+    <div class="top">
+      <div class="title">
+        <h1>Вход в Толиков 🤖</h1>
+        <p class="sub">Три Толика + инструкции + чат клуба. Открыл → прочитал → сделал → скрин в чат.</p>
+      </div>
+      <div class="badge" title="Это просто страница. Никакой магии, только удобство 😄">
+        <span class="dot"></span> быстрый доступ без “где ссылка??”
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <div class="card">
+        <h2>Кнопки</h2>
+        <div class="pills">
+          <a class="pill primary" href="#toliki">3 Толика</a>
+          <a class="pill ghost" href="#instructions">Инструкции</a>
+          <a class="pill ghost" href="#chat">Чат клуба</a>
+          <a class="pill ghost" href="#screens">Скрины обяз.</a>
+        </div>
+        <p class="mini">Подсказка: если человек “не видит ссылки” — он просто открывает эту страницу и ты исчезаешь из цепочки 🤝</p>
+
+        <div id="toliki" style="height:10px"></div>
+        <h2 style="margin-top:14px">3 Толика (март)</h2>
+
+        <div class="list">
+          <div class="item">
+            <div class="head">
+              <div class="name">1) Продюсер сетевика — распаковка/упаковка</div>
+              <div class="tag">распаковка → соцсети</div>
+            </div>
+            <div class="desc">
+              Помогает понять, <b>кто ты как сетевик</b>, собрать позиционирование, тексты, шапку профиля,
+              посты/сторис/оформление. Не “про красивые слова”, а про ясность.
+            </div>
+            <div class="go">
+              <a class="pill primary" target="_blank" rel="noopener" href="https://chatgpt.com/g/g-697de79b2ec481919d5ba36885d0436a-1-tolik-prodiuser-setevika-02-26">Открыть Толика →</a>
+            </div>
           </div>
-          <div class="bd">
-            <ol class="steps">
-              <li>Открой <b>ChatGPT</b> и войди в аккаунт.</li>
-              <li>Нажми нужного Толика ниже.</li>
-              <li>Не жди магию. <b>Делай</b> то, что он просит: 1 шаг → 1 действие.</li>
-            </ol>
-            <div class="divider"></div>
-            <div class="ok">
-              ✅ После каждого общения с Толиком: <b>делай скрин</b> и кидай в чат клуба.
-              Это не “для красоты”. Это чтобы рост был виден и тебе, и мне.
+
+          <div class="item">
+            <div class="head">
+              <div class="name">2) Приглашатор — диалоги без паралича</div>
+              <div class="tag">движение/приглашения</div>
+            </div>
+            <div class="desc">
+              Это <b>не волшебная кнопка</b> “напиши за меня”. Это инструмент, который снимает страх,
+              помогает вести диалог, отвечать на отказы и не зависать. Через 5–10 диалогов ты уже пишешь спокойнее сама.
+            </div>
+            <div class="go">
+              <a class="pill primary" target="_blank" rel="noopener" href="https://chatgpt.com/g/g-692cdfdcb2208191882a37af51708c52-2-tolik-priglashator-02-26">Открыть Толика →</a>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="head">
+              <div class="name">3) Продюсер проекта — соцсети и любые проекты</div>
+              <div class="tag">любой продукт/эксперт</div>
+            </div>
+            <div class="desc">
+              Если ты эксперт/мастер/предприниматель — можно вести <b>любой проект</b>, не только компанию:
+              контент-план, рубрики, сценарии, упаковка, прогрев, смыслы без соплей.
+            </div>
+            <div class="go">
+              <a class="pill primary" target="_blank" rel="noopener" href="https://chatgpt.com/g/g-6975d47679f88191a81d9a89ba0d2d33-tolik-prodiuser-gamebox-testy-mart">Открыть Толика →</a>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="hd">
-            <div class="title">🧾 Быстрые правила</div>
-            <span class="pill">чтобы не тупить</span>
+        <div id="screens" style="height:10px"></div>
+        <div class="rule">
+          <div style="font-size:16px; font-weight:900; letter-spacing:-.01em;">
+            Правило клуба: после каждого взаимодействия с Толиком — <b>скрин результата</b> → в чат клуба.
           </div>
-          <div class="bd">
-            <div class="note">
-              Если ты ждёшь, что Толик сам “напишет за тебя” — ты не работаешь, ты мечтаешь. 😌
-              Толик снимает страх, даёт структуру и разгоняет действие.
-            </div>
-            <p class="small">
-              Если кто-то потерял ссылки — сюда. Если “где кнопка?” — сюда.  
-              Ссылка одна, люди не теряются, ты не бесишься. 🤝
-            </p>
+          <div class="desc" style="margin-top:6px">
+            Без скринов — как без штанов: вроде можно, но странно. <span class="shrimp">🦐</span>
           </div>
         </div>
       </div>
-    </header>
 
-    <section class="links">
-      <div class="linkcard">
-        <div class="top">
-          <div>
-            <div class="kicker">ТОЛИК #1</div>
-            <div class="name">🟢 Первый контакт</div>
-          </div>
-          <button class="btn ghost" data-copy="FIRST_CONTACT_LINK">копировать ссылку</button>
+      <!-- RIGHT -->
+      <div class="card" id="instructions">
+        <h2>Инструкции (коротко)</h2>
+        <ol class="steps">
+          <li><b>Сначала</b> открой ChatGPT (приложение или сайт) и войди в аккаунт.</li>
+          <li>Потом открывай нужного Толика по кнопке выше.</li>
+          <li>Пишешь запрос → получаешь результат → <b>делаешь скрин</b>.</li>
+          <li>Скрин кидаешь в чат клуба (кнопка ниже).</li>
+        </ol>
+
+        <div id="chat" style="height:8px"></div>
+        <h2 style="margin-top:14px">Чат клуба</h2>
+        <p>Сюда летят скрины и быстрые вопросы по использованию.</p>
+        <div class="go">
+          <a class="pill primary" target="_blank" rel="noopener" href="https://t.me/+N7I8xR2cpsU5N2Ji">Открыть чат клуба →</a>
         </div>
-        <div class="meta">
-          Распаковка сетевика: кто ты как партнёр, как о себе говорить, как упаковать соцсети.
-          Пишет тексты, помогает с оформлением и позиционированием.
-        </div>
-        <div class="btnrow">
-          <a class="btn" href="FIRST_CONTACT_LINK" target="_blank" rel="noopener">Открыть Первый контакт</a>
-          <a class="btn secondary" href="#chat">Сразу в чат клуба</a>
+
+        <div class="footer">
+          <div class="copy" id="copyLink">Скопировать ссылку на чат</div>
+          <div>Версия: light • март</div>
         </div>
       </div>
-
-      <div class="linkcard">
-        <div class="top">
-          <div>
-            <div class="kicker">ТОЛИК #2</div>
-            <div class="name">🟣 Приглашатор</div>
-          </div>
-          <button class="btn ghost" data-copy="INVITER_LINK">копировать ссылку</button>
-        </div>
-        <div class="meta">
-          Не “волшебные тексты”, а <b>анти-страх</b>.  
-          5–10–50 диалогов → появляется спокойствие, стиль и движение.
-        </div>
-        <div class="btnrow">
-          <a class="btn" href="INVITER_LINK" target="_blank" rel="noopener">Открыть Приглашатор</a>
-          <a class="btn secondary" href="#rules">Правила скринов</a>
-        </div>
-      </div>
-
-      <div class="linkcard">
-        <div class="top">
-          <div>
-            <div class="kicker">ТОЛИК #3</div>
-            <div class="name">🟡 Продюсер проектов</div>
-          </div>
-          <button class="btn ghost" data-copy="PROJECT_PRODUCER_LINK">копировать ссылку</button>
-        </div>
-        <div class="meta">
-          Для тех, у кого есть идея/экспертность/желание собрать проект.
-          Структура → план → продукт → контент.
-        </div>
-        <div class="btnrow">
-          <a class="btn" href="PROJECT_PRODUCER_LINK" target="_blank" rel="noopener">Открыть Продюсер проектов</a>
-          <a class="btn secondary" href="#chat">Войти в чат клуба</a>
-        </div>
-      </div>
-
-      <div class="linkcard" id="chat">
-        <div class="top">
-          <div>
-            <div class="kicker">ОБЯЗАТЕЛЬНО</div>
-            <div class="name">💬 Чат клуба</div>
-          </div>
-          <button class="btn ghost" data-copy="CLUB_CHAT_LINK">копировать ссылку</button>
-        </div>
-        <div class="meta">
-          Здесь всё закрепляется: разборы, вопросы, движение, скрины после работы с Толиками.
-        </div>
-        <div class="btnrow">
-          <a class="btn" href="CLUB_CHAT_LINK" target="_blank" rel="noopener">Войти в чат клуба</a>
-          <a class="btn secondary" href="#rules">Как правильно работать</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="rules" style="margin-top:16px;">
-      <div class="hd">
-        <div class="title">📌 Как работать, чтобы был результат</div>
-        <span class="pill">без детсада</span>
-      </div>
-      <div class="bd">
-        <ul class="list">
-          <li>Если Толик спрашивает “кому пишем?” — это не магия. Это старт диалога. Пиши <b>привет</b> и работай.</li>
-          <li>Не копируй простыню “как есть”, если тебе не по стилю. Проси: <code>сделай короче</code>, <code>под мой тон</code>, <code>3 варианта</code>.</li>
-          <li>Скрин после результата → в чат. Без скрина = не было работы. 😄</li>
-        </ul>
-        <div class="divider"></div>
-        <p class="small">
-          ⚙️ Ссылки можно менять раз в месяц — это нормально.  
-          Просто вставляешь новые ссылки вместо плейсхолдеров <code>FIRST_CONTACT_LINK</code>, <code>INVITER_LINK</code>, <code>PROJECT_PRODUCER_LINK</code>, <code>CLUB_CHAT_LINK</code>.
-        </p>
-      </div>
-    </section>
-
-    <div class="footer">
-      Сделано так, чтобы ты перестала бегать по личкам со ссылками 🙃<br/>
-      Следующий уровень (если захочешь): <b>страница после оплаты</b> (автовыдача доступа).
-      Это уже про платёжку/интеграции.
     </div>
   </div>
 
-<script>
-  const toast = (msg) => {
-    const el = document.createElement('div');
-    el.textContent = msg;
-    el.style.position = 'fixed';
-    el.style.left = '50%';
-    el.style.bottom = '18px';
-    el.style.transform = 'translateX(-50%)';
-    el.style.padding = '10px 14px';
-    el.style.borderRadius = '14px';
-    el.style.border = '1px solid rgba(255,255,255,.14)';
-    el.style.background = 'rgba(0,0,0,.55)';
-    el.style.color = '#f6f2ef';
-    el.style.backdropFilter = 'blur(8px)';
-    el.style.zIndex = 9999;
-    el.style.boxShadow = '0 16px 40px rgba(0,0,0,.4)';
-    document.body.appendChild(el);
-    setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .25s ease'; }, 1100);
-    setTimeout(()=>el.remove(), 1400);
-  };
+  <script>
+    // neon digits rain
+    (function(){
+      const rain = document.getElementById('rain');
+      const colors = ['#2d6cff','#00d1ff','#b300ff','#00ff9a'];
+      const digits = '0123456789';
+      const count = 36;
 
-  document.querySelectorAll('[data-copy]').forEach(btn=>{
-    btn.addEventListener('click', async ()=>{
-      const value = btn.getAttribute('data-copy');
-      try{
-        await navigator.clipboard.writeText(value);
-        toast('Ссылка скопирована ✅');
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = value;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        ta.remove();
-        toast('Ссылка скопирована ✅');
+      for(let i=0;i<count;i++){
+        const s = document.createElement('span');
+        const char = digits[Math.floor(Math.random()*digits.length)];
+        s.textContent = char;
+        const left = Math.random()*100;
+        const dur = 2.6 + Math.random()*3.6;
+        const delay = Math.random()*2.2;
+        const size = 12 + Math.random()*16;
+        s.style.left = left + '%';
+        s.style.animationDuration = dur + 's';
+        s.style.animationDelay = delay + 's';
+        s.style.fontSize = size + 'px';
+        s.style.color = colors[Math.floor(Math.random()*colors.length)];
+        rain.appendChild(s);
       }
-    });
-  });
-</script>
+    })();
+
+    // copy chat link
+    (function(){
+      const btn = document.getElementById('copyLink');
+      const link = "https://t.me/+N7I8xR2cpsU5N2Ji";
+      btn.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText(link);
+          btn.textContent = "Скопировано ✅";
+          setTimeout(()=>btn.textContent="Скопировать ссылку на чат", 1400);
+        }catch(e){
+          prompt("Скопируй вручную:", link);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
