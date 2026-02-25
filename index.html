@@ -1,396 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NEW CODE • Доступ</title>
-  <meta name="description" content="Три Толика + чат. Быстрый вход без поисков по перепискам." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Толики — HUB</title>
 
-  <style>
-    :root{
-      --bg:#ffffff;
-      --panel:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --stroke:rgba(2,6,23,.10);
-      --shadow:0 18px 50px rgba(2,6,23,.10);
-      --shadow-soft:0 10px 30px rgba(2,6,23,.08);
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-      /* матовый рыжий */
-      --accent:#F97316;      /* orange-500 */
-      --accent2:#FB923C;     /* orange-400 */
-      --accentDark:#EA580C;  /* orange-600 */
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:#faf8f5;
+  color:#1e1e1e;
+  padding:30px;
+  line-height:1.4;
+  position:relative;
+}
 
-      --btnText:#ffffff;
-      --chip:#f8fafc;
-      --chipText:#0f172a;
-    }
+/* мягкий неон */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:0.06;
+  background-image:
+    radial-gradient(circle at 20% 20%, #ff7a00 0%, transparent 25%),
+    radial-gradient(circle at 80% 40%, #ff9d3a 0%, transparent 30%),
+    radial-gradient(circle at 40% 80%, #ff6a00 0%, transparent 25%);
+}
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 10% -10%, rgba(249,115,22,.14), transparent 60%),
-        radial-gradient(900px 500px at 110% 0%, rgba(251,146,60,.14), transparent 60%),
-        radial-gradient(900px 500px at 50% 120%, rgba(2,132,199,.10), transparent 60%),
-        var(--bg);
-      line-height:1.25;
-    }
+.container{
+  max-width:900px;
+  margin:auto;
+}
 
-    .wrap{
-      max-width:960px;
-      margin:0 auto;
-      padding:28px 16px 60px;
-    }
+h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
 
-    .top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:18px;
-    }
+.subtitle{
+  color:#666;
+  margin-bottom:25px;
+}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
+.block{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.04);
+}
 
-    .logo{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
-        linear-gradient(135deg, rgba(249,115,22,.95), rgba(234,88,12,.95));
-      box-shadow: 0 16px 30px rgba(234,88,12,.22);
-      flex:0 0 auto;
-    }
+.title{
+  font-size:22px;
+  margin-bottom:10px;
+}
 
-    .titles{
-      min-width:0;
-    }
+.desc{
+  color:#555;
+  margin-bottom:15px;
+}
 
-    .h1{
-      font-weight:800;
-      font-size:18px;
-      letter-spacing:.2px;
-      margin:0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .sub{
-      margin:4px 0 0;
-      font-size:13px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+.btn{
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+  background:#f28b2c;
+  color:#2b1a0d;
+  transition:0.25s;
+}
 
-    .panel{
-      background:rgba(255,255,255,.85);
-      border:1px solid var(--stroke);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(242,139,44,0.35);
+}
 
-    .hero{
-      padding:22px 22px 18px;
-      border-bottom:1px solid var(--stroke);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-
-    .heroLeft{
-      min-width:260px;
-      flex:1 1 420px;
-    }
-
-    .heroRight{
-      flex:0 0 auto;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
-    .heroTitle{
-      margin:0;
-      font-size:20px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .heroText{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.35;
-    }
-
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      background:var(--chip);
-      border:1px solid var(--stroke);
-      color:var(--chipText);
-      font-size:13px;
-      font-weight:650;
-      text-decoration:none;
-      box-shadow: var(--shadow-soft);
-      transition: transform .12s ease, box-shadow .12s ease;
-      user-select:none;
-    }
-    .chip:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 14px 34px rgba(2,6,23,.12);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-      padding:18px;
-    }
-
-    .card{
-      grid-column: span 12;
-      background:rgba(255,255,255,.9);
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      padding:16px 16px 14px;
-      box-shadow: var(--shadow-soft);
-      position:relative;
-      overflow:hidden;
-    }
-
-    @media (min-width:720px){
-      .card{ grid-column: span 6; }
-      .card.full{ grid-column: span 12; }
-    }
-
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:750;
-      background: rgba(249,115,22,.10);
-      color: var(--accentDark);
-      border: 1px solid rgba(249,115,22,.22);
-    }
-
-    .card h3{
-      margin:10px 0 6px;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.15px;
-    }
-
-    .card p{
-      margin:0;
-      color:var(--muted);
-      font-size:13.5px;
-      line-height:1.35;
-    }
-
-    .btn{
-      margin-top:12px;
-      width:100%;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:13px 14px;
-      border-radius:14px;
-      border:1px solid rgba(234,88,12,.35);
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: var(--btnText);
-      text-decoration:none;
-      font-weight:900;
-      letter-spacing:.2px;
-      box-shadow: 0 18px 34px rgba(234,88,12,.22);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      user-select:none;
-    }
-
-    .btn:hover{
-      transform: translateY(-1px);
-      filter:saturate(1.03);
-      box-shadow: 0 20px 40px rgba(234,88,12,.26);
-    }
-
-    .btn:active{
-      transform: translateY(0px);
-      box-shadow: 0 14px 28px rgba(234,88,12,.20);
-    }
-
-    .btn.secondary{
-      background: #fff;
-      color: var(--text);
-      border:1px solid var(--stroke);
-      box-shadow: var(--shadow-soft);
-    }
-    .btn.secondary:hover{
-      box-shadow: 0 16px 34px rgba(2,6,23,.12);
-    }
-
-    .footer{
-      padding:16px 18px 18px;
-      border-top:1px solid var(--stroke);
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      color:var(--muted);
-      font-size:12.5px;
-    }
-
-    .mini{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .note{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px dashed rgba(2,6,23,.18);
-      background: rgba(248,250,252,.9);
-      color:#334155;
-      font-size:12.5px;
-    }
-
-    .dot{
-      width:8px;height:8px;border-radius:99px;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(249,115,22,.12);
-    }
-  </style>
+.footer{
+  margin-top:30px;
+  text-align:center;
+  color:#777;
+  font-size:14px;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="titles">
-          <p class="h1">NEW CODE • Доступ</p>
-          <p class="sub">Три Толика + чат — чтобы никто не терял ссылки 😼</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="panel">
-      <div class="hero">
-        <div class="heroLeft">
-          <h2 class="heroTitle">Открывай. Читай. Делай.</h2>
-          <p class="heroText">
-            Это страница для тех, кто <b>уже внутри</b>. Тут всё нужное в одном месте.
-            Без «а где ссылка?» и без отката назад на 200 сообщений.
-          </p>
-        </div>
+<div class="container">
 
-        <div class="heroRight">
-          <a class="chip" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank" rel="noopener noreferrer">
-            💬 Чат клуба
-          </a>
-          <a class="chip" href="#how" >
-            🧠 Как работать
-          </a>
-        </div>
-      </div>
+<h1>Открывай. Читай. Делай.</h1>
+<div class="subtitle">
+Это страница для тех, кто уже внутри. Всё нужное — в одном месте.
+</div>
 
-      <div class="grid">
-        <!-- 1 -->
-        <section class="card">
-          <span class="tag">1 • Первый контакт</span>
-          <h3>Распаковка сетевика → упаковка соцсетей</h3>
-          <p>
-            Чтобы стало ясно: <b>кто ты</b> как сетевик, <b>что говорить</b> и <b>как выглядеть</b> в соцсетях.
-            Может помочь с текстами/идеями/структурой профиля — без «я не знаю кто я».
-          </p>
-          <a class="btn" href="https://chatgpt.com/g/g-697de79b2ec481919d5ba36885d0436a-1-tolik-prodiuser-setevika-02-26" target="_blank" rel="noopener noreferrer">
-            🚀 Открыть Первый контакт
-          </a>
-        </section>
-
-        <!-- 2 -->
-        <section class="card">
-          <span class="tag">2 • Приглашатор</span>
-          <h3>Не волшебный текст. А снятие страха.</h3>
-          <p>
-            Он не “пишет за тебя магию”.
-            Он делает главное: убирает ступор, страх отказа и хаос.
-            Ты пишешь 5–10–50 раз — и <b>начинаешь говорить нормально</b>, своим голосом.
-          </p>
-          <a class="btn" href="https://chatgpt.com/g/g-692cdfdcb2208191882a37af51708c52-2-tolik-priglashator-02-26" target="_blank" rel="noopener noreferrer">
-            💬 Открыть Приглашатор
-          </a>
-        </section>
-
-        <!-- 3 -->
-        <section class="card full">
-          <span class="tag">3 • Продюсер проекта</span>
-          <h3>Твой личный продюсер под любой проект</h3>
-          <p>
-            Можно вести не только “по компании”, а <b>любой</b> свой проект:
-            экспертку, блог, продукт, консультации, канал, запуск — всё, что хочешь вывести в форму.
-          </p>
-          <a class="btn" href="https://chatgpt.com/g/g-6975d47679f88191a81d9a89ba0d2d33-tolik-prodiuser-gamebox-testy-mart" target="_blank" rel="noopener noreferrer">
-            🎬 Открыть Продюсера проекта
-          </a>
-        </section>
-
-        <!-- How -->
-        <section class="card full" id="how">
-          <span class="tag">Как работать</span>
-          <h3>Правило №1: после каждого диалога — скрин 📸</h3>
-          <p>
-            Чтобы не терять мысли, не спорить с памятью и не играть в «мне показалось».
-            Сделал диалог → <b>скрин результата</b> → в чат. Всё.
-          </p>
-
-          <div class="mini" style="margin-top:12px;">
-            <span class="note"><span class="dot"></span> Открывай GPT → потом ссылку на Толика</span>
-            <span class="note"><span class="dot"></span> Если не открывается — попробуй другой браузер/вкладку</span>
-            <span class="note"><span class="dot"></span> Вопросы — в чат, не в личку Юле 😄</span>
-          </div>
-
-          <a class="btn secondary" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank" rel="noopener noreferrer" style="margin-top:14px;">
-            💬 Перейти в чат клуба
-          </a>
-        </section>
-      </div>
-
-      <div class="footer">
-        <div>© NEW CODE • Страница доступа</div>
-        <div class="mini">
-          <span>Если ссылка «истекла» — просто обновим на этой странице.</span>
-        </div>
-      </div>
-    </div>
+<div class="block">
+  <div class="title">🚀 Первый контакт</div>
+  <div class="desc">
+  Распаковка сетевика → упаковка соцсетей.
   </div>
+  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+    Открыть Первый контакт
+  </a>
+</div>
+
+<div class="block">
+  <div class="title">💬 Приглашатор</div>
+  <div class="desc">
+  Снимает страх общения. Помогает начать говорить своим голосом.
+  </div>
+  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+    Открыть Приглашатор
+  </a>
+</div>
+
+<div class="block">
+  <div class="title">🎬 Продюсер проекта</div>
+  <div class="desc">
+  Твой личный продюсер под любой проект.
+  </div>
+  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+    Открыть Продюсера
+  </a>
+</div>
+
+<div class="block">
+  <div class="title">📌 Как работать</div>
+  <div class="desc">
+  После каждого диалога делай скрин результата → кидай в чат клуба.
+  </div>
+  <a class="btn" href="https://t.me/+FcUZNAoxM4hiN2Iy" target="_blank">
+    Перейти в чат клуба
+  </a>
+</div>
+
+<div class="footer">
+NEW CODE • Страница доступа
+</div>
+
+</div>
+
 </body>
 </html>
